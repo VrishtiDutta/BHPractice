@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.BucketList.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>BucketList App</name>
+    <name>RoomTracker</name>
     <description>
-        Ionic Restify and MongoDB - An End to End Hybrid App
+        Landlords can keep track of the people interested in renting their rooms, and prospective renters can keep track of the status of rooms they're interested in
     </description>
     <author email="admin@thejackalofjavascript.com" href="http://thejackalofjavascript.com/">
-      Arvind Ravulvaru
+      Sugata, Cynthia, Vrishti, Julianna
     </author>
     <content src="index.html" />
     <access origin="*" />

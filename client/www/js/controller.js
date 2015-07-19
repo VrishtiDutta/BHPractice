@@ -137,6 +137,71 @@ angular.module('bucketList.controllers', ['bucketList.services'])
     };
  
 })
+
+.controller('mainCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window) {
+    $rootScope.$on('fetchAll', function(){
+            API.getAll($rootScope.getToken()).success(function (data, status, headers, config) {
+            $rootScope.show("Please wait... Processing");
+            $scope.list = [];
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].isCompleted == false) {
+                    $scope.list.push(data[i]);
+                }
+            };
+            if($scope.list.length == 0)
+            {
+                $scope.noData = true;
+            }
+            else
+            {
+                $scope.noData = false;
+            }
+ 
+            $ionicModal.fromTemplateUrl('templates/main.html', function (modal) {
+                $scope.newTemplate = modal;
+            });
+ 
+            $scope.newTask = function () {
+                $scope.newTemplate.show();
+            };
+            $rootScope.hide();
+        }).error(function (data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    });
+ 
+    $rootScope.$broadcast('fetchAll');
+ 
+    $scope.markCompleted = function (id) {
+        $rootScope.show("Please wait... Updating List");
+        API.putItem(id, {
+            isCompleted: true
+        }, $rootScope.getToken())
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.doRefresh(1);
+            }).error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+            });
+    };
+ 
+ 
+ 
+    $scope.deleteItem = function (id) {
+        $rootScope.show("Please wait... Deleting from List");
+        API.deleteItem(id, $rootScope.getToken())
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.doRefresh(1);
+            }).error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+            });
+    };
+ 
+})
  
 .controller('completedCtrl', function ($rootScope,$scope, API, $window) {
         $rootScope.$on('fetchCompleted', function () {

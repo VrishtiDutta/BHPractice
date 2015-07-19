@@ -46,6 +46,15 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                     }
                 }
             })
+            .state('bucket.main', {
+                url: '/main',
+                views: {
+                    'bucket-main': {
+                        templateUrl: 'templates/main.html',
+                        controller: 'mainCtrl'
+                    }
+                }
+            })
             .state('bucket.completed', {
                 url: '/completed',
                 views: {
